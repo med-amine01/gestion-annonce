@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { RestPasswordPage } from './rest-password.page';
+import {RestPasswordPage} from './rest-password.page';
 
 const routes: Routes = [
   {
