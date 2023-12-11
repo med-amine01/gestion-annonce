@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "gestion-annonce": {
+      "hosting": {
+        "app": [
+          "gestion-annonce"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "gestion-annonce"
+  }
+}
