@@ -1,35 +1,62 @@
 <ion-content [fullscreen]="true">
-  <div class="header">
-    <ion-title class="title">Welcome</ion-title>
-    <p class="subTitle">Sign up to create your account</p>
-  </div>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Get Started</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-  <form>
+  <div class="header">
+    <ion-title class="title" size="large">Get Started</ion-title>
+    <p class="subtitle">By creating an account</p>
+  </div>
+  <form [formGroup]="ionicForm" novalidate>
     <div class="ion-padding">
       <ion-item>
-        <ion-input placeholder="name" class="input"></ion-input>
-        <ion-icon name="person-outline" slot="end"></ion-icon>
+        <ion-label position="floating">Enter your name</ion-label>
+        <ion-input class="input" formControlName="fullname"/>
+        <ion-icon slot="end" name="person-outline"></ion-icon>
       </ion-item>
-
+      <div style="padding-top: -26px;padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['fullname'].touched && ionicForm.controls['fullname'].hasError('required')">
+        <ion-text class="errorInput" color="danger">fullname is required.</ion-text>
+      </div>
       <ion-item>
-        <ion-input placeholder="email" class="input"></ion-input>
-        <ion-icon name="mail-outline" slot="end"></ion-icon>
+        <ion-label position="floating">Enter your email</ion-label>
+        <ion-input class="input" formControlName="email"/>
+        <ion-icon slot="end" name="mail-outline"></ion-icon>
       </ion-item>
-
+      <div style="padding-top: -26px;padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['email'].touched && ionicForm.controls['email'].hasError('required')">
+        <ion-text class="errorInput" color="danger">email is required.</ion-text>
+      </div>
+      <div style="padding-top: -26px;padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['email'].touched && ionicForm.controls['email'].hasError('pattern')">
+        <ion-text class="errorInput" color="danger">email not valid.</ion-text>
+      </div>
       <ion-item>
-        <ion-input placeholder="password" class="input"></ion-input>
-        <ion-icon name="lock-closed-outline" slot="end"></ion-icon>
+        <ion-label position="floating">Enter your password</ion-label>
+        <ion-input class="input" type="password" formControlName="password"/>
+        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
       </ion-item>
+      <div style="padding-top: -26px;padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].hasError('required')">
+        <ion-text class="errorInput" color="danger">Password is required.</ion-text>
+      </div>
+      <div style="padding-top: -26px;padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].hasError('pattern')">
+        <ion-text class="errorInput" color="danger">
+          Password must be more than 8 characters and contain at least one uppercase letter and one number.
+        </ion-text>
+      </div>
+      <div>
+        <div class="ion-padding">
+          <ion-button class="sendBtn" expand="block" shape="round" (click)="signUp()">signup</ion-button>
+        </div>
+      </div>
 
       <div class="signinLink">
-        <a style="color: #FFC33F" [routerLink]="['/login']">Signin now</a>
+        <p class="p">Already a member? <a [routerLink]="['/login']" style="color: #FFC33F">Log in</a></p>
       </div>
     </div>
   </form>
-
-  <ion-fab vertical="bottom" horizontal="end" style="margin-bottom:30px;">
-    <ion-fab-button [routerLink]="['/home']">
-      <ion-icon name="chevron-forward"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>
