@@ -13,8 +13,8 @@
     <div class="ion-padding">
       <ion-item>
         <ion-label position="floating">Enter your name</ion-label>
+        <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-input class="input" formControlName="fullname"/>
-        <ion-icon slot="end" name="person-outline"></ion-icon>
       </ion-item>
       <div style="padding-top: -26px;padding-bottom: 16px;"
            *ngIf="ionicForm.controls['fullname'].touched && ionicForm.controls['fullname'].hasError('required')">
@@ -22,8 +22,8 @@
       </div>
       <ion-item>
         <ion-label position="floating">Enter your email</ion-label>
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
         <ion-input class="input" formControlName="email"/>
-        <ion-icon slot="end" name="mail-outline"></ion-icon>
       </ion-item>
       <div style="padding-top: -26px;padding-bottom: 16px;"
            *ngIf="ionicForm.controls['email'].touched && ionicForm.controls['email'].hasError('required')">
@@ -35,28 +35,26 @@
       </div>
       <ion-item>
         <ion-label position="floating">Enter your password</ion-label>
+        <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
         <ion-input class="input" type="password" formControlName="password"/>
-        <ion-icon slot="end" name="lock-closed-outline"></ion-icon>
       </ion-item>
       <div style="padding-top: -26px;padding-bottom: 16px;"
            *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].hasError('required')">
         <ion-text class="errorInput" color="danger">Password is required.</ion-text>
       </div>
       <div style="padding-top: -26px;padding-bottom: 16px;"
-           *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].hasError('pattern')">
+           *ngIf="ionicForm.controls['password'].touched && ionicForm.controls['password'].hasError('minlength')">
         <ion-text class="errorInput" color="danger">
-          Password must be more than 8 characters and contain at least one uppercase letter and one number.
+          Password must be at least 6 characters
         </ion-text>
       </div>
-      <div>
-        <div class="ion-padding">
-          <ion-button class="sendBtn" expand="block" shape="round" (click)="signUp()">signup</ion-button>
-        </div>
-      </div>
+    </div>
+    <div class="ion-padding">
+      <ion-button expand="block" shape="round" (click)="signUp()" [disabled]="ionicForm.invalid">signup</ion-button>
+    </div>
 
-      <div class="signinLink">
-        <p class="p">Already a member? <a [routerLink]="['/login']" style="color: #FFC33F">Log in</a></p>
-      </div>
+    <div class="signinLink">
+      <p class="p">Already a member? <a [routerLink]="['/login']" style="color: #FFC33F">Log in</a></p>
     </div>
   </form>
 </ion-content>

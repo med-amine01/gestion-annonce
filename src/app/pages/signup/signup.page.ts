@@ -27,20 +27,14 @@ export class SignupPage implements OnInit {
         Validators.required
       ]
       ],
-      contact: ['', [
-        Validators.required,
-        Validators.pattern("^[0-9]*$"),
-        Validators.minLength(10),
-      ]
-      ],
       email: ['', [
         Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}$'),
+        Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'),
       ],
       ],
       password: ['', [
-        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-8])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'),
         Validators.required,
+        Validators.minLength(6)
       ],
       ],
     });
@@ -59,8 +53,8 @@ export class SignupPage implements OnInit {
       const fullname = this.ionicForm.value.fullname;
       this.authService.registerUser(email, password, fullname).then((res) => {
         loading.dismiss();
-        this.toast.toaster("welcome home " + fullname, ToastType.SUCCESS.toString());
-        this.router.navigate(['/home']);
+        this.toast.toaster("welcome " + fullname, ToastType.SUCCESS.toString());
+        this.router.navigate(['/ad']);
       }).catch((err) => {
         loading.dismiss();
         console.log(err);
