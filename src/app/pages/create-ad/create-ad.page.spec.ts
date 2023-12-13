@@ -1,13 +1,12 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {SignupPage} from './signup.page';
+import {CreateAdPage} from './create-ad.page';
 
-describe('SignupPage', () => {
-  let component: SignupPage;
-  let fixture: ComponentFixture<SignupPage>;
+describe('CreateAdPage', () => {
+  let component: CreateAdPage;
+  let fixture: ComponentFixture<CreateAdPage>;
 
-  // @ts-ignore
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(SignupPage);
+    fixture = TestBed.createComponent(CreateAdPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

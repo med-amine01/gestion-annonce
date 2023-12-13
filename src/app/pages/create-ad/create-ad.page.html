@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <app-toolbar></app-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-title class="title" size="large">Keep Going</ion-title>
+    <p class="subtitle">by creating your own ads</p>
+  </div>
+  <form [formGroup]="ionicForm" novalidate>
+    <div class="ion-padding">
+      <ion-item>
+        <ion-label position="floating">Enter your title</ion-label>
+        <ion-input class="input" formControlName="title"></ion-input>
+      </ion-item>
+      <div style="padding-top: -26px; padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['title'].touched && ionicForm.controls['title'].hasError('required')">
+        <ion-text class="errorInput" color="danger">Title is required.</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Enter your subtitle</ion-label>
+        <ion-input class="input" formControlName="subtitle"></ion-input>
+      </ion-item>
+      <div style="padding-top: -26px; padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['subtitle'].touched && ionicForm.controls['subtitle'].hasError('required')">
+        <ion-text class="errorInput" color="danger">Subtitle is required.</ion-text>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Enter your description</ion-label>
+        <ion-textarea class="input" formControlName="description"></ion-textarea>
+      </ion-item>
+      <div style="padding-top: -26px; padding-bottom: 16px;"
+           *ngIf="ionicForm.controls['description'].touched && ionicForm.controls['description'].hasError('required')">
+        <ion-text class="errorInput" color="danger">Description is required.</ion-text>
+      </div>
+      <div class="ion-padding-btn">
+        <ion-button expand="block" shape="round" [routerLink]="['/ad']" style="width: 100%">BACK</ion-button>
+        <ion-button expand="block" shape="round" (click)="createAd()" style="width: 100%" color="warning">ADD</ion-button>
+      </div>
+    </div>
+  </form>
+
+  <ion-fab  vertical="bottom" horizontal="end" style="margin-bottom: 30px;" >
+    <ion-fab-button [routerLink]="['/ad']">
+      <ion-icon name="list-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

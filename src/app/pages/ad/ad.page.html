@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <app-toolbar></app-toolbar>
+</ion-header>
+<div class="ion-padding">
+  <ion-button expand="block" shape="round" style="width: 100%" (click)="getAds(false)">ALL ADS</ion-button>
+  <ion-button expand="block" shape="round" style="width: 100%" color="secondary" (click)="getAds(true)">MY ADS
+  </ion-button>
+</div>
+<ion-content>
+  <ion-card *ngFor="let ad of ads">
+    <ion-card-header>
+      <span class="card-title-container">
+        <ion-card-title>{{ ad.title }}</ion-card-title>
+        <span class="date-container">{{ ad.createdAt | date: 'dd/MM/yyyy' }}</span>
+      </span>
+      <ion-card-subtitle>{{ ad.subtitle }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ ad.description }}
+    </ion-card-content>
+    <div *ngIf="ad.createdBy === uid">
+      <ion-button fill="clear">
+        <ion-icon name="create-outline" color="warning"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="clear">
+        <ion-icon name="trash-outline" color="danger"></ion-icon>
+      </ion-button>
+    </div>
+
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" style="position: fixed;">
+    <ion-fab-button [routerLink]="['/create-ad']">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

@@ -45,8 +45,12 @@ export class LoginPage implements OnInit {
       this.authService.loginUser(email, password).then((res) => {
         loading.dismiss();
         let name = res.user.displayName;
+        // Save the uuid in local storage
+        localStorage.setItem('uid', res.user.uid);
+        // Display toaster
         this.toast.toaster(`welcome home ${name != null ? name : res.user.email}` , ToastType.SUCCESS.toString());
-        this.router.navigate(['/home']);
+        // Redirect the user to ads page
+        this.router.navigate(['/ad']);
       }).catch((err) => {
         loading.dismiss();
         console.log(err);

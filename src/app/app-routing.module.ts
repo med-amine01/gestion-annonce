@@ -27,6 +27,18 @@ const routes: Routes = [
     path: 'rest-password',
     loadChildren: () => import('./pages/rest-password/rest-password.module').then( m => m.RestPasswordPageModule)
   },
+  {
+    path: 'ad',
+    loadChildren: () => import('./pages/ad/ad.module').then( m => m.AdPageModule)
+  },
+  {
+    path: 'create-ad',
+    loadChildren: () => import('./pages/create-ad/create-ad.module').then( m => m.CreateAdPageModule)
+  },
+  {
+    path: 'toolbar',
+    loadChildren: () => import('./pages/toolbar/toolbar.module').then( m => m.ToolbarPageModule)
+  },
 ];
 
 @NgModule({
