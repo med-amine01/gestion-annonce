@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Ad} from "../../model/ad";
-import {AdService} from "../../services/ad.service";
+import { Component, OnInit } from '@angular/core';
+import { Ad } from "../../model/ad";
+import { AdService } from "../../services/ad.service";
+import { ToolBaringService } from "../../services/tool-baring.service";
+import { ToastService } from "../../services/toast.service";
+import { ToastType } from "../../enum/toast-type";
 
 @Component({
   selector: 'app-ad',
@@ -10,25 +13,53 @@ import {AdService} from "../../services/ad.service";
 export class AdPage implements OnInit {
   ads: Ad[];
   uid = localStorage.getItem('uid');
-  constructor(private adService: AdService) {}
+  isMyAds = true;
+
+  constructor(
+    private adService: AdService,
+    protected toolBaring: ToolBaringService,
+    private toast: ToastService
+  ) {}
 
   ngOnInit() {
-    this.getAllOtherAds();
+    this.getAds();
   }
 
-  getAds(isMyAds: boolean) {
-    if (isMyAds) {
-      this.adService.getAds().subscribe(data => {
-        this.ads = data.filter(ad => ad.createdBy === this.uid);
-      });
-    } else {
-      this.getAllOtherAds();
-    }
+  private filterAdsByUser(data: Ad[]): Ad[] {
+    return data.filter(ad => ad.createdBy === this.uid);
   }
 
-  private getAllOtherAds() {
+  private filterAdsByCategory(data: Ad[], isCategory1: boolean): Ad[] {
+    return data.filter(ad => ad.createdBy === this.uid && ad.category === (isCategory1 ? 'cat1' : 'cat2'));
+  }
+
+  private handleAds(data: Ad[]) {
+    this.ads = this.isMyAds ? this.filterAdsByUser(data) : this.getAllOtherAds(data);
+  }
+
+  private getAllOtherAds(data: Ad[]): Ad[] {
+    return data.filter(ad => ad.createdBy !== this.uid);
+  }
+
+  getAds() {
     this.adService.getAds().subscribe(data => {
-      this.ads = data.filter(ad => ad.createdBy !== this.uid);
+      this.handleAds(data);
+      this.isMyAds = !this.isMyAds;
+    });
+  }
+
+  getCategory(isCategory1: boolean) {
+    this.adService.getAds().subscribe(data => {
+      this.ads = this.isMyAds ? this.filterAdsByCategory(data, isCategory1) : this.getAllOtherAds(data);
+      this.isMyAds = !this.isMyAds;
+    });
+  }
+
+  deleteAd(id: string) {
+    this.adService.removeAdById(id).then(value => {
+      this.toast.toaster("Deleted successfully", ToastType.INFO);
+    }).catch(reason => {
+      console.log(reason);
     });
   }
 }
