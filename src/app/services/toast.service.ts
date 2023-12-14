@@ -5,16 +5,17 @@ import {ToastController} from "@ionic/angular";
   providedIn: 'root'
 })
 export class ToastService {
-  constructor(private toastController: ToastController) {
-  }
+  constructor(private toastController: ToastController) {}
 
-   async toaster(message: string, type: string) {
+  // Async function to display a toast message with the provided content and type
+  async toaster(message: string, type: string) {
     const toast = await this.toastController.create({
-      message: message,
-      color: type,
-      duration: 2000,
-      position: 'bottom'
+      message: message,     // Message to be displayed in the toast
+      color: type,          // Type of toast (success, danger, etc.)
+      duration: 1500,       // Duration for which the toast is visible (in milliseconds)
+      position: 'bottom'    // Position on the screen where the toast will appear
     });
-    toast.present();
+
+    await toast.present();        // Display the toast
   }
 }
