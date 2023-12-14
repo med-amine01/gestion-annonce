@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ToolBaringService } from './tool-baring.service';
+import {ToolBaringService} from './tool-baring.service';
 
 describe('ToolBaringService', () => {
   let service: ToolBaringService;

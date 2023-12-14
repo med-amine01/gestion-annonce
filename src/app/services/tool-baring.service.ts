@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import {AdService} from "./ad.service";
+import {Injectable} from '@angular/core';
 import {LoadingController} from "@ionic/angular";
 import {ToastService} from "./toast.service";
 import {Router} from "@angular/router";
@@ -11,26 +10,31 @@ import {ToastType} from "../enum/toast-type";
 })
 export class ToolBaringService {
 
-  constructor(private adService: AdService,
-              private loading:LoadingController,
-              private toast: ToastService,
-              private router: Router,
-              private authService: AuthenticationService) {}
+  constructor(
+    private loading: LoadingController,
+    private toast: ToastService,
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
 
-
+  // Async function to handle user logout with loading indicator
   async logout() {
     const loading = await this.loading.create();
-    // @ts-ignore
-    this.authService.logOut().then(async value => {
+
+    // Logout using the authentication service
+    this.authService.logOut().then(async () => {
+      // Display loading indicator while logging out
       await loading.present();
-      // @ts-ignore
+
+      // Remove user UID from local storage
       localStorage.removeItem('uid');
-      // @ts-ignore
-      this.toast.toaster("Good Bye", ToastType.SUCCESS.toString());
-      loading.dismiss();
-      this.router.navigate(['/login']);
+
+      // Show success toast, dismiss loading, and navigate to the login page
+      await this.toast.toaster("Goodbye", ToastType.SUCCESS.toString());
+      await loading.dismiss();
+      await this.router.navigate(['/login']);
     }).catch(reason => {
-      // @ts-ignore
+      // Show error toast if logout fails
       this.toast.toaster(reason.message, ToastType.SUCCESS.toString());
     });
   }
