@@ -6,7 +6,7 @@ import {Router} from "@angular/router";
 import {ToastType} from "../../enum/toast-type";
 import {AdService} from "../../services/ad.service";
 import {Ad} from "../../model/ad";
-import {AuthenticationService} from "../../services/authentication.service";
+import {ToolBaringService} from "../../services/tool-baring.service";
 
 @Component({
   selector: 'app-create-ad',
@@ -21,7 +21,7 @@ export class CreateAdPage implements OnInit {
               private router: Router,
               public formBuilder: FormBuilder,
               private adService: AdService,
-              private autService: AuthenticationService) {
+              protected toolBaring: ToolBaringService) {
   }
 
   ngOnInit() {
@@ -29,6 +29,7 @@ export class CreateAdPage implements OnInit {
       title: ['', [Validators.required]],
       subtitle: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      category: ['cat1', [Validators.required]]
     });
   }
 
@@ -44,6 +45,10 @@ export class CreateAdPage implements OnInit {
     return this.ionicForm?.value.description;
   }
 
+  getCategory() {
+    return this.ionicForm?.value.category;
+  }
+
   async createAd() {
     const loading = await this.loadingController.create();
     if (this.ionicForm.valid) {
@@ -51,15 +56,14 @@ export class CreateAdPage implements OnInit {
       // Creating ad object
       const ad = new Ad();
       ad.id = null;
-      ad.title = this.getTitle();
-      ad.subtitle = this.getSubTitle();
-      ad.description =  this.getDescription();
+      ad.title = this.getTitle().trim();
+      ad.subtitle = this.getSubTitle().trim();
+      ad.category = this.getCategory();
+      ad.description =  this.getDescription().trim();
       const currentDate = new Date();
       ad.createdAt = currentDate.toString();
-      console.log(localStorage.getItem('uid'))
       // Retrieving user UID
       ad.createdBy = localStorage.getItem('uid');
-      console.log(ad.toPlainObject());
 
       // Presisting ad in firebase
       this.adService.saveAd(ad.toPlainObject()).then((docRef) => {
